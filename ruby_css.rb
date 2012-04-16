@@ -23,26 +23,21 @@ module RubyCss
     end
 
     def initialize
-      @ks = []# hashes
-      @hs = []# keys
-      @r  = {}# root hash
+      @stack = []# hashes
+      @r     = {}# root hash
     end
 
     def _(as, &blk)
       return unless as.is_a?(Array) && blk.is_a?(Proc)
 
-      h = @hs.last ? @hs.last[@ks.last] : {}
-      h[as] = {}
-
-      @ks << as
-      @hs << h
+      h = @stack.last || {}
+      @stack << h[as] = {}
 
       blk.call
 
-      @ks.pop
-      @hs.pop
+      @stack.pop
 
-      @r.merge!(h) if @ks.empty?
+      @r.merge!(h) if @stack.empty?
 
       nil
     end
@@ -57,11 +52,7 @@ module RubyCss
 
     def mixin(value)
       return unless value.is_a?(Hash)
-
-      h = @hs.last
-      k = @ks.last
-      h[k].merge!(value)
-
+      @stack.last.merge!(value)
       nil
     end
 
