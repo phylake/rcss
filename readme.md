@@ -121,7 +121,7 @@ Here's 2 trivial mixins
     color = 0x333333
     _ ['div'] {
         drop_shadow(5, 10, 20, '#000')
-        color( brighten(color, 1) )
+        color( brighten(color, 10) )
     }
     
     # CSS produced
