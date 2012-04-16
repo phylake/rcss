@@ -31,13 +31,12 @@
 An [internal dsl] [fowler] for css built on ruby
 
 - Variables are ruby variables
-- Mixins are ruby functions that return a Hash
-- The syntax describes ruby data structures for maximum extensibility
+- Mixins are ruby functions
 
 ## Why
 
 - I like terse, expressive languages and wanted the full power of ruby behind my css
-- I was sick of dealing with Sass and Less's syntax, rails integration issues, etc.
+- I was sick of dealing with *other* frameworks' pseudo-language crap, rails integration issues, etc.
 
 ## How
 
@@ -91,27 +90,27 @@ Nesting always begins with a `_`
 
 ### Mixins
 
-Here's a trivial mixin. Mixin methods always call `mixin` passing a Hash
+Here's 2 trivial mixins
 
     # your_mixins.rb
     require 'ruby_css'
     module RubyCss
         module SimpleMixinExample
-            def brighten(color, value)
-                unless color.is_a?(Fixnum)
-                    mixin Hash.new
-                    return
+            def drop_shadow(h, v, blur, color, inset=false)
+                m = {}
+        
+                ['', '-webkit-', '-moz'].each do |v|
+                    m["#{vendor}box-shadow"] = "#{h}px #{v}px #{blur}px #{color}"
                 end
                 
+                mixin m
+            end
+            
+            def brighten(color, value)
                 r = (((color >> 16) + value) & 0xff) << 16
                 g = (((color >>  8) + value) & 0xff) <<  8
                 b = (((color >>  0) + value) & 0xff) <<  0
-                brighter_color = r | g | b
-                
-                a_hash = {
-                    color: brighter_color
-                }
-                mixin a_hash
+                r | g | b
             end
         end
         
@@ -119,14 +118,18 @@ Here's a trivial mixin. Mixin methods always call `mixin` passing a Hash
     end
     
     # input_file.whatever
-    color = 0xfefefe
-    _ ['span'] {
-        brighten color, 1
+    color = 0x333333
+    _ ['div'] {
+        drop_shadow(5, 10, 20, '#000')
+        color( brighten(color, 1) )
     }
     
     # CSS produced
-    span {
-        color: #ffffff
+    div {
+        box-shadow: 5px 10px 20px #000;
+        -webkit-box-shadow: 5px 10px 20px #000;
+        -moz-box-shadow: 5px 10px 20px #000;
+        color: #3D3D3D;
     }
 
 ### Syntax details
@@ -142,7 +145,6 @@ If you want something a little less terse than the `_` you can make a different 
     module RubyCss
       class Dsl
         alias_method :something_less_terse, :_
-        alias_method :node, :_
       end
     end
 
@@ -150,9 +152,6 @@ and then use it in place of `_`
 
     something_less_terse ['a', 'span'] {
         color '#f8f8f8'
-        node ['.nested-class] {
-            color '#fff'
-        }
     }
 
 #### A note about ruby hashes
