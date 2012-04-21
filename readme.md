@@ -161,7 +161,15 @@ Here are 2 trivial mixins
 
 ### Syntax details
 
-TODO fill this in
+#### Specifying colors
+
+You can always specify a color a string `#fff`, `#e0e0e0`. This works well if you're not planning on doing any calculations with the color
+
+If you are doing calculations you should specify the above as `0xffffff`, and `0xe0e0e0`. Then you can do any necessary calculations. Once calculations are complete you can call `.color` on the result.
+
+    blue = 0x0000ff
+    brighter_blue = brighten(blue, 1)
+    color: brighter_blue.color
 
 ### Tips
 
@@ -288,6 +296,10 @@ and is also the required syntax for using arrays as keys
 ## Who
 
 I built this for myself because I have shit to do. I imagine it will be useful for other developers who share that sentiment. That said, I've tried to make it as accessible and intuitive as possible and would like to see it grow into a viable alternative to existing CSS frameworks.
+
+### Dude, why isn't your CSS output optimized?
+
+Because this tool has a specific focus, least of which is squeezing every byte out of the output. Also because I gzip my CSS and deploy it to a CDN which works just fine for my needs.
 
 [fowler]: http://martinfowler.com/bliki/DomainSpecificLanguage.html
 [sass]: http://sass-lang.com/
