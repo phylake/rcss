@@ -99,51 +99,6 @@ module RubyCss
   require './mixins/all'
 end# RubyCss
 
-module RubyCss
-    module Foo
-      def foo_bar(value)
-        h = {
-          ['td'] => {
-            color: 0xffffff.color
-          },
-          ['tr'] => {
-            color: 0xffffff.color
-          }
-        }
-
-        mixin h
-      end
-    end
-
-    Dsl.send(:include, Foo)
-end
-
-# h = {
-#   ['div', 'hl'] => {
-#     color: '#000',
-#     color: '#222',
-#     foo_bar: 'ack',
-#     ['.nested-class'] => { color: '#fff' },
-#     ['hr', 'div', '.other-class'] => { color: '#fff' } # need to solve this
-#   }
-# }
-
-# i = {
-#   ['div'] => {
-#     color: '#222'
-#   },
-
-#   ['hl'] => {
-#     color: '#222'
-#   },
-
-#   ['div', '.nested-class'] => {
-#     color: '#fff'
-#   }
-# }
-
-# puts RubyCss.to_css(h)
-
 def file
   buf = ''
   File.open('examples/sample.rb', 'r') {|f| buf = f.read }
@@ -173,5 +128,5 @@ def local
   # puts d.raw
 end
 
-file
-# local
+# file
+local
