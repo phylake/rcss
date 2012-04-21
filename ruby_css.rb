@@ -96,7 +96,7 @@ module RubyCss
 
   end
 
-  require './mixins/basic'
+  require './mixins/all'
 end# RubyCss
 
 module RubyCss
