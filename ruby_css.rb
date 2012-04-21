@@ -106,7 +106,7 @@ module RubyCss
           ['td'] => {
             color: 0xffffff.color
           },
-          tr: {
+          ['tr'] => {
             color: 0xffffff.color
           }
         }
@@ -144,17 +144,34 @@ end
 
 # puts RubyCss.to_css(h)
 
+def file
+  buf = ''
+  File.open('examples/sample.rb', 'r') {|f| buf = f.read }
+  puts RubyCss.to_css_simple RubyCss::Dsl.evaluate(buf).raw
+end
 
-# File.open('examples/sample.rb', 'r') {|f| puts RubyCss::Dsl.evaluate(f.read).raw.inspect }
+def local
+  d = RubyCss::Dsl.new
 
+  d._ ['.list_layout'] {
+    d._ ['.list_style'] {
+      d._ ['input'] {
+        d.width '100%'
+        d.margin_bottom '.5em'
+      }
 
-d = RubyCss::Dsl.new
-d._ ['a', 'hl'] {
-  d.color '#222'
-  d.foobar 0xffffff.color
-  d.foo_bar 'ack'
-  d._ ['.nested-class'] { d.color '#fff' }
-}
+      d.padding '1em'
+      d.background '#F5F5F5'
 
-puts RubyCss.to_css_simple d.raw
-# puts d.raw
+      r = 8
+      d.border('solid', 1, '#eee', r, r, r, r)
+      d.drop_shadow(1, 1, 1, '#fafafa', true)
+    }
+  }
+
+  puts RubyCss.to_css_simple d.raw
+  # puts d.raw
+end
+
+file
+# local

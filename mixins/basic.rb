@@ -2,7 +2,7 @@ module RubyCss
   module Color
     def adjust(color, value)
       return -1 unless color.is_a?(Fixnum)
-      return -2 if value.zero?
+      return color if value.zero?
 
       if -1 < value && value < 1
         value = value > 0 ? value + 1 : value - 1
@@ -33,9 +33,9 @@ module RubyCss
       0x4 => '-moz-'
     }
 
-    DEFAULT = 0x1
-    WEBKIT  = 0x2
-    MOZ     = 0x4
+    NONE   = 0x1
+    WEBKIT = 0x2
+    MOZ    = 0x4
 
     def border(style, width=1, color=0, tl=0, tr=0, br=0, bl=0)
       styles = %(
@@ -79,8 +79,8 @@ module RubyCss
     def drop_shadow(h, v, blur, color, inset=false)
       m = {}
 
-      VENDORS.each do |v|
-        m["#{$vendor}box-shadow"] = "#{h}px #{v}px #{blur}px #{color}"
+      VENDORS.each_value do |v|
+        m["#{v}box-shadow"] = "#{h}px #{v}px #{blur}px #{color}"
       end
 
       mixin m

@@ -61,7 +61,13 @@ Variables are regular ruby variables meaning you can do things like
 
     # CSS produced
 
-    span, p {
+    span {
+        color: #fff;
+        background-color: #ffeedd;
+        border-color: #ff0000;
+    }
+
+    p {
         color: #fff;
         background-color: #ffeedd;
         border-color: #ff0000;
@@ -90,7 +96,28 @@ Nesting always begins with a `_`
 
 ### Mixins
 
-Here's 2 trivial mixins
+A mixin is a Ruby module nested under `RubyCss` containing any number of methods
+
+    # A complete mixin that does nothing
+    module RubyCss
+        module YourCollectionOfMixins
+            def your_mixin
+                h = {}
+                mixin h
+            end
+
+            def your_other_mixin
+                h = {}
+                mixin h
+            end
+        end
+
+        Dsl.send(:include, YourCollectionOfMixins)
+    end
+
+Each method must call `mixin` passing in a `Hash`
+
+Here are 2 trivial mixins
 
     # your_mixins.rb
     require 'ruby_css'
@@ -140,7 +167,7 @@ TODO fill this in
 
 #### Aliasing
 
-If you want something a little less terse than the `_` you can make a different method using aliasing
+If you want something a little less terse than `_` you can make a different method using aliasing
 
     module RubyCss
       class Dsl
@@ -204,10 +231,10 @@ and is also the required syntax for using arrays as keys
 
 #### Variables
 
-    blue = '#3bbfce'
+    blue = 0x3bbfce
     margin = '16px'
     _ ['content-navigation'] {
-      border_color blue
+      border_color blue.color
       color( darken(blue, .09) )
     }
 
@@ -234,7 +261,7 @@ and is also the required syntax for using arrays as keys
 
             def table_mixin
               the_mixin = {
-                th: {
+                ['th']: {
                   text_align: 'center',
                   font_weight: 'bold'
                 },
