@@ -1,3 +1,28 @@
+class Unit
+  @num
+
+  def initialize(value=nil)
+    @num = value
+  end
+
+  def method_missing(meth, *args, &blk)
+    @num.send(meth,*args,&blk)
+  end
+
+  def to_s(radix=10)
+    method_missing('to_s', radix)
+  end
+end
+
+class Em < Unit
+end
+
+class Px < Unit
+end
+
+class Pt < Unit
+end
+
 class Fixnum
   def to_color
     color = to_s(16)
@@ -5,6 +30,18 @@ class Fixnum
     "##{color}"
   end
   alias_method :color, :to_color
+
+  def em
+    Em.new(self)
+  end
+
+  def px
+    Px.new(self)
+  end
+
+  def pt
+    Pt.new(self)
+  end
 end
 
 class String
