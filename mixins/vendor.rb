@@ -49,7 +49,7 @@ module RubyCss
       mixin m
     end
 
-    def drop_shadow(h, v, blur, color, inset=false)
+    def drop_shadow(h, v, blur, color='#000', inset=false)
       m = {}
 
       VENDORS.each_value do |v|

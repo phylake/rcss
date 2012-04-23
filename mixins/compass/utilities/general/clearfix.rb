@@ -1,0 +1,37 @@
+# This basic method is preferred for the usual case, when positioned
+# content will not show outside the bounds of the container.
+# 
+# Recommendations include using this in conjunction with a width.
+# Credit: [quirksmode.org](http://www.quirksmode.org/blog/archives/2005/03/clearing_floats.html)
+def clearfix
+  mixin({
+    overflow: 'hidden'
+  })
+end
+
+# This older method from Position Is Everything called
+# [Easy Clearing](http://www.positioniseverything.net/easyclearing.html)
+# has the advantage of allowing positioned elements to hang
+# outside the bounds of the container at the expense of more tricky CSS.
+def legacy_pie_clearfix
+  mixin({
+    'content:after'    => '\0020',
+    'display:after'    => 'block',
+    'height:after'     => '0',
+    'clear:after'      => 'both',
+    'overflow:after'   => 'hidden',
+    'visibility:after' => 'hidden'
+  })
+end
+
+# This is an updated version of the PIE clearfix method that reduces the amount of CSS output.
+# If you need to support Firefox before 3.5 you need to use `legacy_pie_clearfix` instead.
+# 
+# Adapted from: [A new micro clearfix hack](http://nicolasgallagher.com/micro_clearfix_hack/)
+def pie_clearfix
+  mixin({
+    'content:after' => '',
+    'display:after' => 'table',
+    'clear:after' => 'both'
+  })
+end

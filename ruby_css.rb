@@ -1,54 +1,4 @@
-class Unit
-  @num
-
-  def initialize(value=nil)
-    @num = value
-  end
-
-  def method_missing(meth, *args, &blk)
-    @num.send(meth,*args,&blk)
-  end
-
-  def to_s(radix=10)
-    method_missing('to_s', radix)
-  end
-end
-
-class Em < Unit
-end
-
-class Px < Unit
-end
-
-class Pt < Unit
-end
-
-class Fixnum
-  def to_color
-    color = to_s(16)
-    color.slice!(1..3) if color.slice(1..3) == color.slice(3..6)
-    "##{color}"
-  end
-  alias_method :color, :to_color
-
-  def em
-    Em.new(self)
-  end
-
-  def px
-    Px.new(self)
-  end
-
-  def pt
-    Pt.new(self)
-  end
-end
-
-class String
-  def from_color(value)
-  end
-  alias_method :color, :from_color
-end
+require './global'
 
 module RubyCss
   class Dsl
@@ -90,7 +40,7 @@ module RubyCss
     def mixin(value)
       return unless value.is_a?(Hash)
       @stack.last.merge!(value)
-      nil
+      value
     end
 
     def finalize
@@ -165,5 +115,85 @@ def local
   # puts d.raw
 end
 
+def local2
+  d = RubyCss::Dsl.new
+  
+  total_cols = 12
+  col_width = 4.em
+  gutter_width = 1.em
+  side_gutter_width = gutter_width
+
+  show_grid_backgrounds = false
+  global_fixed_height = gutter_width * 3
+
+  d._ ['body'] {
+    d.font_family '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans_serif'
+    d.line_height 1.5
+  }
+
+  d._ ['footer'] {
+    d.full
+    d.pad(3,3)
+  }
+
+  d._ ['input[type=search]'] {
+    d.font_size 16.px
+  }
+
+  d._ ['.susy_container'] {
+    d.container
+    # d.susy_grid_background
+  }
+
+  d._ ['.list_layout'] {
+    d.columns(3)
+    d.alpha
+
+    d._ ['.list_style'] {
+      d._ ['input'] {
+        d.width 100.percent
+        d.margin_bottom 0.5.em
+      }
+
+      d.padding 1.em
+      d.background 0xF5F5F5.color
+
+      r = 8
+      d.border 'solid', 1, '#eee', r, r, r, r
+
+      d.drop_shadow 1, 1, 1, '#fafafa', true
+    }
+  }
+
+  d._ ['.detail_view'] {
+    d.columns(9)
+    d.omega
+  }
+
+  d._ ['#global_nav'] {
+    # font_size: 1.5em
+    # line_height: 3em
+
+    d.background_color '#333'
+    d.color '#eee'
+    d.position 'fixed'
+    d.top 0
+    d.right 0
+    d.left 0
+    d.min_height global_fixed_height
+    d.background '-webkit_gradient(linear, 0% 100%, 0% 0%, from(#222), to(#333))'
+    d.drop_shadow 0, 5, 5
+  }
+
+  d._ ['#global_page'] {
+    d.width '100%'
+    d.padding_top(global_fixed_height + 0.5)
+    d.margin_top gutter_width
+  }
+
+  puts RubyCss.to_css_simple d.raw
+end
+
 # file
-local
+# local
+local2
