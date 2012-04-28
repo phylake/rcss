@@ -1,36 +1,30 @@
 #
-# Imports
-#
-
-# @import "compass/reset";
-# @import "susy";
-# @import "mixins";
-
-#
 # Vars
 #
 
-total_cols = 12
-col_width = 4.em
-gutter_width = 1.em
-side_gutter_width = gutter_width
+# Your basic settings for the grid
+self.g_total_cols = 12
+self.g_col_width = 4.em
+self.g_gutter_width = 1.em
+self.g_side_gutter_width = self.g_gutter_width
 
-show_grid_backgrounds = false
-global_fixed_height = gutter_width * 3
+# Controls for right-to-left or bi-directional sites.
+self.g_from_direction = 'left'
+
+# The direction that +omega elements are floated by deafult.
+self.g_omega_float = opposite_position(self.g_from_direction)
+
+self.g_show_grid_backgrounds = false
+self.g_global_fixed_height = self.g_gutter_width * 3
 
 #
 # Tags
 #
 
-_ '[body]' {
+_ ['body'] {
   font_family '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans_serif'
   line_height 1.5
 }
-
-# nav {
-#   columns(3)
-#   alpha
-# }
 
 _ ['footer'] {
   full
@@ -41,25 +35,13 @@ _ ['input[type=search]'] {
   font_size 16.px
 }
 
-# div[role="main"] {
-#   columns(9)
-#   omega
-#   article {
-#     columns(6,9)
-#   }
-#   aside {
-#     columns(3,9)
-#     omega(9)
-#   }
-# }
-
 #
 # Classes
 #
 
-_ ['.susy_container'] {
+_ ['.susy_container:after'] {
   container
-  susy_grid_background
+  # susy_grid_background
 }
 
 _ ['.list_layout'] {
@@ -101,13 +83,13 @@ _ ['#global_nav'] {
   top 0
   right 0
   left 0
-  min_height global_fixed_height
-  background '-webkit_gradient(linear, 0% 100%, 0% 0%, from(#222), to(#333))'
+  min_height g_global_fixed_height
+  background '-webkit-gradient(linear, 0% 100%, 0% 0%, from(#222), to(#333))'
   drop_shadow 0, 5, 5
 }
 
 _ ['#global_page'] {
   width '100%'
-  padding_top(global_fixed_height + .5)
-  margin_top gutter_width
+  padding_top(g_global_fixed_height + 0.5)
+  margin_top g_gutter_width
 }

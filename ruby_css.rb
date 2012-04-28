@@ -16,6 +16,7 @@ module RubyCss
     end
 
     def _(as, &blk)
+      puts "_"
       return unless as.is_a?(Array) && blk.is_a?(Proc)
 
       h = @stack.last || {}
@@ -32,6 +33,8 @@ module RubyCss
     
     def method_missing(meth, *args, &blk)
       if meth =~ /^g_/
+        puts "mm #{meth}"
+
         if meth =~ /=$/
           @gs[meth] = args.first
           return
@@ -134,7 +137,7 @@ def local2
   d.g_gutter_width = 1.em
   d.g_side_gutter_width = d.g_gutter_width
   d.g_from_direction = 'left'
-  d.g_omega_float = d.g_opposite_position(d.g_from_direction)
+  d.g_omega_float = d.opposite_position(d.g_from_direction)
   d.g_show_grid_backgrounds = false
   d.g_global_fixed_height = d.g_gutter_width * 3
 
@@ -206,6 +209,6 @@ def local2
   puts RubyCss.to_css_simple d.raw
 end
 
-# file
+file
 # local
-local2
+# local2
