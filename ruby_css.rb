@@ -12,6 +12,7 @@ module RubyCss
     def initialize
       @stack = []# hashes
       @r     = {}# root hash
+      @gs    = {}# globals
     end
 
     def _(as, &blk)
@@ -30,6 +31,15 @@ module RubyCss
     end
     
     def method_missing(meth, *args, &blk)
+      if meth =~ /^g_/
+        if meth =~ /=$/
+          @gs[meth] = args.first
+          return
+        end
+        
+        return @gs[(meth.to_s + '=').to_sym]
+      end
+
       k    = meth.to_s.gsub(/_/, '-')
       v    = args.join(' ')
       h    = {}
@@ -117,14 +127,16 @@ end
 
 def local2
   d = RubyCss::Dsl.new
-  
-  total_cols = 12
-  col_width = 4.em
-  gutter_width = 1.em
-  side_gutter_width = gutter_width
 
-  show_grid_backgrounds = false
-  global_fixed_height = gutter_width * 3
+  # Your basic settings for the grid.
+  d.g_total_cols = 12
+  d.g_col_width = 4.em
+  d.g_gutter_width = 1.em
+  d.g_side_gutter_width = d.g_gutter_width
+  d.g_from_direction = 'left'
+  d.g_omega_float = d.g_opposite_position(d.g_from_direction)
+  d.g_show_grid_backgrounds = false
+  d.g_global_fixed_height = d.g_gutter_width * 3
 
   d._ ['body'] {
     d.font_family '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans_serif'
@@ -140,7 +152,7 @@ def local2
     d.font_size 16.px
   }
 
-  d._ ['.susy_container'] {
+  d._ ['.susy_container:after'] {
     d.container
     # d.susy_grid_background
   }
@@ -180,15 +192,15 @@ def local2
     d.top 0
     d.right 0
     d.left 0
-    d.min_height global_fixed_height
-    d.background '-webkit_gradient(linear, 0% 100%, 0% 0%, from(#222), to(#333))'
+    d.min_height d.g_global_fixed_height
+    d.background '-webkit-gradient(linear, 0% 100%, 0% 0%, from(#222), to(#333))'
     d.drop_shadow 0, 5, 5
   }
 
   d._ ['#global_page'] {
     d.width '100%'
-    d.padding_top(global_fixed_height + 0.5)
-    d.margin_top gutter_width
+    d.padding_top(d.g_global_fixed_height + 0.5)
+    d.margin_top d.g_gutter_width
   }
 
   puts RubyCss.to_css_simple d.raw

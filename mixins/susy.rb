@@ -1,8 +1,8 @@
 module RubyCss
   module Susy
+    self.extend RubyCss::Helpers
 
     # Imports -------------------------------------------------------------------
-
     require './mixins/compass/utilities/general/clearfix'
     require './mixins/compass/utilities/general/float'
     # require './mixins/compass/layout/grid_background'
@@ -10,16 +10,16 @@ module RubyCss
     # Variables -----------------------------------------------------------------
 
     # Your basic settings for the grid.
-    total_cols = 12
-    col_width = 4.em
-    gutter_width = 1.em
-    side_gutter_width = gutter_width
+    # g_total_cols = 12
+    # g_col_width = 4.em
+    # g_gutter_width = 1.em
+    # g_side_gutter_width = g_gutter_width
 
     # Controls for right-to-left or bi-directional sites.
-    from_direction = 'left'
+    # g_from_direction = 'left'
 
     # The direction that +omega elements are floated by deafult.
-    omega_float = opposite_position(from_direction)
+    # g_omega_float = opposite_position(g_from_direction)
 
     # Functions -----------------------------------------------------------------
 
@@ -28,10 +28,10 @@ module RubyCss
     def columns_width(n=0)
       sg = 0
       if n.zero?
-        n = total_cols
-        sg = side_gutter_width
+        n = g_total_cols
+        sg = g_side_gutter_width
       end
-      (n*col_width) + (ceil(n - 1)*gutter_width) + (sg*2)
+      (n*g_col_width) + ((n - 1)*g_gutter_width).ceil + (sg*2)
     end
 
     # Return the percentage for the target in a given context
@@ -46,17 +46,17 @@ module RubyCss
 
     # Return the percentage width of a single gutter in a context of 'c'
     def gutter(c=0)
-      percent_width(gutter_width, columns_width(c))
+      percent_width(g_gutter_width, columns_width(c))
     end
 
     # Return the percentage width of a single side gutter in a context of 'c'
     def side_gutter(c=0)
-      percent_width(side_gutter_width, columns_width(c))
+      percent_width(g_side_gutter_width, columns_width(c))
     end
 
     # Return the percentage width of a single column in a context of 'c'
     def column(c=0)
-      percent_width(col_width, columns_width(c))
+      percent_width(g_col_width, columns_width(c))
     end
 
     # Base Mixin ----------------------------------------------------------------
@@ -80,7 +80,7 @@ module RubyCss
     #  - Context MUST NOT be declared on a top-level element.
     # By default a grid_column is floated left with a right gutter.
     #  - Override those with +float("right"), +alpha or +omega
-    def columns_m(n, context=0, from=from_direction)
+    def columns_m(n, context=0, from=g_from_direction)
       to = opposite_position(from)
 
       # the column is floated left
@@ -95,7 +95,7 @@ module RubyCss
     end
 
     # reset a column element to default block behavior
-    def reset_column(from=from_direction)
+    def reset_column(from=g_from_direction)
       to = opposite_position(from)
       reset_float
       mixin({
@@ -104,7 +104,7 @@ module RubyCss
       })
     end
 
-    def un_column(from=from_direction)
+    def un_column(from=g_from_direction)
       reset_column(from)
     end
 
@@ -124,14 +124,14 @@ module RubyCss
     # Padding Mixins ------------------------------------------------------------
 
     # add empty colums as padding before an element.
-    def prefix(n, context=0, from=from_direction)
+    def prefix(n, context=0, from=g_from_direction)
       mixin({
         "padding-#{from}" => columns(n, context) + gutter(context)
       })
     end
 
     # add empty colums as padding after an element.
-    def suffix(n, context=0, from=from_direction)
+    def suffix(n, context=0, from=g_from_direction)
       to = opposite_position(from)
       mixin({
         "padding-#{to}" => columns(n, context) + gutter(context)
@@ -139,7 +139,7 @@ module RubyCss
     end
 
     # add empty colums as padding before and after an element.
-    def pad(p=false, s=false, c=0, from=from_direction)
+    def pad(p=false, s=false, c=0, from=g_from_direction)
       prefix(p, c, from) if p
       suffix(s, c, from) if s
     end
@@ -151,7 +151,7 @@ module RubyCss
 
     # mixin on any element spanning the first column in non-nested context to
     # take side-gutters into account.
-    def alpha(nested=false, from=from_direction)
+    def alpha(nested=false, from=g_from_direction)
       m = {}
       if nested
         warn "The alpha mixin is not needed in a nested context"
@@ -163,23 +163,23 @@ module RubyCss
 
     # mixin on the last element of a row, in order to take side_gutters and
     # the page edge into account. Set the nested argument for nested columns.
-    def omega(nested=false, from=from_direction)
+    def omega(nested=false, from=g_from_direction)
       to   = opposite_position(from)
-      hack = opposite_position(omega_float)
+      hack = opposite_position(g_omega_float)
       sg   = nested ? side_gutter : 0
-      float(omega_float)
+      float(g_omega_float)
 
       m = {
         "margin-#{to}" => sg
       }
-      m["margin-#{hack}"] = gutter_width if legacy_support_for_ie6 or legacy_support_for_ie7
+      m["margin-#{hack}"] = g_gutter_width if legacy_support_for_ie6 or legacy_support_for_ie7
       mixin m
     end
 
     # Susy Grid Backgrounds -----------------------------------------------------
 
     # def susy_grid_background
-    #   column_grid_background(total_cols, col_width, gutter_width, side_gutter_width, true)
+    #   column_grid_background(g_total_cols, g_col_width, g_gutter_width, g_side_gutter_width, true)
     # end
 
     # def show_grid(img=false)
@@ -189,6 +189,6 @@ module RubyCss
     # end
 
   end
-  
+
   Dsl.send(:include, Susy)
 end

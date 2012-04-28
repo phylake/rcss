@@ -6,7 +6,7 @@ class Unit
   end
 
   def method_missing(meth, *args, &blk)
-    puts meth
+    # puts "Unit #{meth}"
     @num.send(meth,*args,&blk)
   end
 

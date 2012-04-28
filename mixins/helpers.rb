@@ -1,6 +1,6 @@
 module RubyCss
   module Helpers
-    def ceil(a,b)
+    def max(a,b)
       a > b ? a : b
     end
 

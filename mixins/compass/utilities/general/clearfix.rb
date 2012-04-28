@@ -15,12 +15,12 @@ end
 # outside the bounds of the container at the expense of more tricky CSS.
 def legacy_pie_clearfix
   mixin({
-    'content:after'    => '\0020',
-    'display:after'    => 'block',
-    'height:after'     => '0',
-    'clear:after'      => 'both',
-    'overflow:after'   => 'hidden',
-    'visibility:after' => 'hidden'
+    content:    '\0020',
+    display:    'block',
+    height:     '0',
+    clear:      'both',
+    overflow:   'hidden',
+    visibility: 'hidden'
   })
 end
 
@@ -30,8 +30,8 @@ end
 # Adapted from: [A new micro clearfix hack](http://nicolasgallagher.com/micro_clearfix_hack/)
 def pie_clearfix
   mixin({
-    'content:after' => '',
-    'display:after' => 'table',
-    'clear:after' => 'both'
+    content: '""',
+    display: 'table',
+    clear:   'both'
   })
 end
