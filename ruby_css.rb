@@ -16,7 +16,6 @@ module RubyCss
     end
 
     def _(as, &blk)
-      puts "_"
       return unless as.is_a?(Array) && blk.is_a?(Proc)
 
       h = @stack.last || {}
@@ -33,8 +32,6 @@ module RubyCss
     
     def method_missing(meth, *args, &blk)
       if meth =~ /^g_/
-        puts "mm #{meth}"
-
         if meth =~ /=$/
           @gs[meth] = args.first
           return
@@ -99,9 +96,9 @@ module RubyCss
   require './mixins/all'
 end# RubyCss
 
-def file
+def file(name)
   buf = ''
-  File.open('examples/sample.rb', 'r') {|f| buf = f.read }
+  File.open(name, 'r') {|f| buf = f.read }
   puts RubyCss.to_css_simple RubyCss::Dsl.evaluate(buf).raw
 end
 
@@ -209,6 +206,6 @@ def local2
   puts RubyCss.to_css_simple d.raw
 end
 
-file
-# local
+file 'examples/sample.rb'
 # local2
+# local

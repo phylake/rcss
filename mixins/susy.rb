@@ -36,7 +36,6 @@ module RubyCss
 
     # Return the percentage for the target in a given context
     def percent_width(t, c)
-      puts "pw #{t}, #{c}"
       (t / c) * 100
     end
 

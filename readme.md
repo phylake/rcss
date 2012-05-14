@@ -14,7 +14,11 @@
 
     # CSS produced
 
-    a, span {
+    a {
+        color: #fff;
+    }
+
+    span {
         color: #fff;
     }
     
@@ -36,7 +40,7 @@ An [internal dsl] [fowler] for css built on ruby
 ## Why
 
 - I like terse, expressive languages and wanted the full power of ruby behind my css
-- I was sick of dealing with *other* frameworks' pseudo-language crap, rails integration issues, etc.
+- I was sick of dealing with *other* frameworks' pseudo-language crap, environment assumptions, etc.
 
 ## How
 
@@ -107,8 +111,7 @@ A mixin is a Ruby module nested under `RubyCss` containing any number of methods
             end
 
             def your_other_mixin
-                h = {}
-                mixin h
+                mixin({})
             end
         end
 
@@ -123,10 +126,10 @@ Here are 2 trivial mixins
     require 'ruby_css'
     module RubyCss
         module SimpleMixinExample
-            def drop_shadow(h, v, blur, color, inset=false)
+            def drop_shadow(h, v, blur, color)
                 m = {}
         
-                ['', '-webkit-', '-moz'].each do |v|
+                ['', '-webkit-', '-moz'].each do |vendor|
                     m["#{vendor}box-shadow"] = "#{h}px #{v}px #{blur}px #{color}"
                 end
                 
@@ -269,7 +272,7 @@ and is also the required syntax for using arrays as keys
 
             def table_mixin
               the_mixin = {
-                ['th']: {
+                ['th'] => {
                   text_align: 'center',
                   font_weight: 'bold'
                 },
@@ -295,11 +298,17 @@ and is also the required syntax for using arrays as keys
 
 ## Who
 
-I built this for myself because I have shit to do. I imagine it will be useful for other developers who share that sentiment. That said, I've tried to make it as accessible and intuitive as possible and would like to see it grow into a viable alternative to existing CSS frameworks.
+I built this for myself out of frustration with the alternatives. That said, I've tried to make it as accessible and intuitive as possible and would like to see it grow into a viable alternative to existing CSS frameworks.
 
 ### Dude, why isn't your CSS output optimized?
 
 Because this tool has a specific focus, least of which is squeezing every byte out of the output. Also because I gzip my CSS and deploy it to a CDN which works just fine for my needs.
+
+### Reasons **not** to use RubyCSS
+
+- Core Ruby classes such as String and Fixnum are altered. If you need something that runs in Rails during the rest of the application this might not be the best option. While unlikely that the alterations will clash with Rails or other frameworks, I'm not ensuring compatibility with anything else.
+
+- You need a language agnostic language: Sass, for example, stands on its own meaning other languages can write Sass parsers and you can take your Sass with you to another language's environment.
 
 [fowler]: http://martinfowler.com/bliki/DomainSpecificLanguage.html
 [sass]: http://sass-lang.com/

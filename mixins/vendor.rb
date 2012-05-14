@@ -52,8 +52,8 @@ module RubyCss
     def drop_shadow(h, v, blur, color='#000', inset=false)
       m = {}
 
-      VENDORS.each_value do |v|
-        m["#{v}box-shadow"] = "#{h}px #{v}px #{blur}px #{color}"
+      VENDORS.each_value do |vendor|
+        m["#{vendor}box-shadow"] = "#{h}px #{v}px #{blur}px #{color}"
       end
 
       mixin m

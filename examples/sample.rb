@@ -6,16 +6,16 @@
 self.g_total_cols = 12
 self.g_col_width = 4.em
 self.g_gutter_width = 1.em
-self.g_side_gutter_width = self.g_gutter_width
+self.g_side_gutter_width = g_gutter_width
 
 # Controls for right-to-left or bi-directional sites.
 self.g_from_direction = 'left'
 
 # The direction that +omega elements are floated by deafult.
-self.g_omega_float = opposite_position(self.g_from_direction)
+self.g_omega_float = opposite_position(g_from_direction)
 
 self.g_show_grid_backgrounds = false
-self.g_global_fixed_height = self.g_gutter_width * 3
+self.g_global_fixed_height = (g_gutter_width * 3)
 
 #
 # Tags
