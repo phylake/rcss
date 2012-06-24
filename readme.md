@@ -197,45 +197,40 @@ and then use it in place of `_`
 I'm using ruby 1.9 which added an alternative syntax for declaring hashes. If this doesn't work for you
 
     def my_cool_mixin
-        h = {
+        mixin({
             color: 0xe0e0d0
-        }
-        mixin h
+        })
     end
     
 this will
 
     def my_cool_mixin
-        h = {
+        mixin({
             :color => 0xe0e0d0
-        }
-        mixin h
+        })
     end
 
 and is also the required syntax for using arrays as keys
 
     # USE THIS
     def my_cool_mixin
-        h = {
+        mixin({
             ['.nested'] => '#e0e0d0'
-        }
-        mixin h
+        })
     end
     
     # NOT THIS
     def my_cool_mixin
-        h = {
+        mixin({
             ['.nested']: '#e0e0d0'
-        }
-        mixin h
+        })
     end
     
     # OR THIS
     def my_cool_mixin
-        h = {
+        mixin({
             :['.nested'] => '#e0e0d0'
-        }
-        mixin h
+        })
     end
 
 ### [Sass equivalents] [sass]
