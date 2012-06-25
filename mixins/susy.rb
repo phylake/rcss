@@ -36,7 +36,7 @@ module RubyCss
 
     # Return the percentage for the target in a given context
     def percent_width(t, c)
-      (t / c) * 100
+      (t / c) * 100.percent
     end
 
     # Return the percentage width of 'n' columns in a context of 'c'
@@ -67,7 +67,7 @@ module RubyCss
       mixin({
         margin: 'auto',
         width: columns_width,
-        max_width: '100%'
+        max_width: 100.percent
       })
     end
 
@@ -139,7 +139,7 @@ module RubyCss
     end
 
     # add empty colums as padding before and after an element.
-    def pad(p=false, s=false, c=0, from=g_from_direction)
+    def pad(p=0, s=0, c=0, from=g_from_direction)
       prefix(p, c, from) if p
       suffix(s, c, from) if s
     end

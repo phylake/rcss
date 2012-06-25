@@ -1,8 +1,9 @@
+# 
+# Units
+# 
 class Unit
-  @num
-
   def initialize(value=nil)
-    @num = value
+    @num = value || 0
   end
 
   def method_missing(meth, *args, &blk)
@@ -12,6 +13,22 @@ class Unit
 
   def to_s(radix=10)
     @num.to_s(radix)
+  end
+
+  def +(value)
+    self.class.new(@num + value)
+  end
+
+  def -(value)
+    self.class.new(@num - value)
+  end
+
+  def *(value)
+    value.class.new(@num * value)
+  end
+
+  def /(value)
+    value.class.new(@num / value)
   end
 end
 
@@ -34,52 +51,49 @@ class Pt < Unit
 end
 
 class Percent < Unit
+  def initialize(value=nil)
+    @num = super/100.0
+  end
+
   def to_s
-    "#{@num}%"
+    "#{@num*100.0}%"
   end
 end
 
+module Conversions
+  def em
+    Em.new(self)
+  end
+
+  def px
+    Px.new(self)
+  end
+
+  def pt
+    Pt.new(self)
+  end
+
+  def percent
+    Percent.new(self)
+  end
+end
+
+# 
+# Ruby ext
+#
 class Fixnum
+  include Conversions
+
   def to_color
     color = to_s(16)
     color.slice!(1..3) if color.slice(1..3) == color.slice(3..6)
     "##{color}"
   end
   alias_method :color, :to_color
-
-  def em
-    Em.new(self)
-  end
-
-  def px
-    Px.new(self)
-  end
-
-  def pt
-    Pt.new(self)
-  end
-
-  def percent
-    Percent.new(self)
-  end
 end
 
 class Float
-  def em
-    Em.new(self)
-  end
-
-  def px
-    Px.new(self)
-  end
-
-  def pt
-    Pt.new(self)
-  end
-
-  def percent
-    Percent.new(self)
-  end
+  include Conversions
 end
 
 class String

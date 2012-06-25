@@ -21,6 +21,8 @@ self.g_global_fixed_height = (g_gutter_width * 3)
 # Tags
 #
 
+# global_reset
+
 _ ['body'] {
   font_family '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans_serif'
   line_height 1.5
@@ -38,6 +40,10 @@ _ ['input[type=search]'] {
 #
 # Classes
 #
+
+_ ['.susy_container'] {
+  
+}
 
 _ ['.susy_container:after'] {
   container
