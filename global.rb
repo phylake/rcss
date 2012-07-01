@@ -1,66 +1,11 @@
 # 
 # Units
 # 
-class Unit
-  def initialize(value=nil)
-    @num = value || 0
-  end
-
-  def method_missing(meth, *args, &blk)
-    # puts "Unit #{meth}"
-    @num.send(meth,*args,&blk)
-  end
-
-  def to_s(radix=10)
-    @num.to_s(radix)
-  end
-
-  def +(value)
-    self.class.new(@num + value)
-  end
-
-  def -(value)
-    self.class.new(@num - value)
-  end
-
-  def *(value)
-    value.class.new(@num * value)
-  end
-
-  def /(value)
-    value.class.new(@num / value)
-  end
-end
-
-class Em < Unit
-  def to_s
-    "#{@num}em"
-  end
-end
-
-class Px < Unit
-  def to_s
-    "#{@num}px"
-  end
-end
-
-class Pt < Unit
-  def to_s
-    "#{@num}pt"
-  end
-end
-
-class Percent < Unit
-  def initialize(value=nil)
-    @num = super/100.0
-  end
-
-  def to_s
-    "#{@num*100.0}%"
-  end
-end
-
 module Conversions
+  def u
+    Unit.new(self)
+  end
+
   def em
     Em.new(self)
   end
@@ -75,6 +20,92 @@ module Conversions
 
   def percent
     Percent.new(self)
+  end
+end
+
+class Unit
+  include Conversions
+
+  def initialize(value=nil)
+    @num = value.is_a?(Unit) ? value.num : value
+    @num ||= 0
+  end
+
+  def method_missing(meth, *args, &blk)
+    @num.send(meth,*args,&blk)
+  end
+
+  def to_s(radix=10)
+    @num.to_s(radix)
+  end
+
+  def +(value)
+    if value.is_a?(Unit)
+      value.class.new(num + value.num)
+    else
+      self.class.new(num + value)
+    end
+  end
+
+  def -(value)
+    if value.is_a?(Unit)
+      value.class.new(num - value.num)
+    else
+      self.class.new(num - value)
+    end
+  end
+
+  def *(value)
+    if value.is_a?(Unit)
+      value.class.new(num * value.num)
+    else
+      self.class.new(num * value)
+    end
+  end
+
+  def /(value)
+    if value.is_a?(Unit)
+      value.class.new(num / value.num.to_f)
+    else
+      self.class.new(num / value.to_f)
+    end
+  end
+
+  def num
+    @num
+  end
+end
+
+class Em < Unit
+  def to_s
+    "#{num}em"
+  end
+end
+
+class Px < Unit
+  def to_s
+    "#{num}px"
+  end
+end
+
+class Pt < Unit
+  def to_s
+    "#{num}pt"
+  end
+end
+
+class Percent < Unit
+  def initialize(value=nil)
+    @num = super/100.0
+  end
+
+  def num
+    super*100
+  end
+
+  def to_s
+    # "%d%" % (num + (((num % 1) * 1000).to_i / 1000.0))
+    "%.3f%" % num
   end
 end
 

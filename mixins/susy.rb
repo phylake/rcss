@@ -36,7 +36,13 @@ module RubyCss
 
     # Return the percentage for the target in a given context
     def percent_width(t, c)
-      (t / c) * 100.percent
+      # Both of these work
+      # (t.u / c) * 100.percent
+      # ((t / c.to_f) * 100).percent
+      # TODO make this work
+      # (t / c) * 100.percent
+
+      (t.u / c) * 100.percent
     end
 
     # Return the percentage width of 'n' columns in a context of 'c'
@@ -112,12 +118,12 @@ module RubyCss
     # There is no need for +columns, +alpha or +omega on a +full element.
     def full(nested=false)
       m = { clear: 'both' }
-      
+
       m.merge!({
         margin_left: side_gutter,
         margin_right: side_gutter
       }) unless nested
-      
+
       mixin m
     end
 
@@ -140,8 +146,8 @@ module RubyCss
 
     # add empty colums as padding before and after an element.
     def pad(p=0, s=0, c=0, from=g_from_direction)
-      prefix(p, c, from) if p
-      suffix(s, c, from) if s
+      prefix(p, c, from) unless p.zero?
+      suffix(s, c, from) unless s.zero?
     end
 
     # Alpha & Omega Mixins ------------------------------------------------------
