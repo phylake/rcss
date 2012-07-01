@@ -1,6 +1,6 @@
-# 
-# Units
-# 
+######################################
+#               Units
+######################################
 module Conversions
   def u
     Unit.new(self)
@@ -109,9 +109,9 @@ class Percent < Unit
   end
 end
 
-# 
-# Ruby ext
-#
+######################################
+#             Ruby ext
+######################################
 class Fixnum
   include Conversions
 
@@ -131,4 +131,10 @@ class String
   def from_color(value)
   end
   alias_method :color, :from_color
+end
+
+class Object
+  def deep_clone
+    Marshal.load(Marshal.dump(self))
+  end
 end

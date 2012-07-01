@@ -69,7 +69,9 @@ module RubyCss
 
     # Set the outer grid-containing element(s).
     def container
-      pie_clearfix
+      # TODO before/after filters
+      # pie_clearfix
+      
       mixin({
         margin: 'auto',
         width: columns_width,

@@ -16,10 +16,12 @@ module RubyCss
     end
 
     def _(as, &blk)
-      return unless as.is_a?(Array) && blk.is_a?(Proc)
+      raise "need a block" unless blk.is_a?(Proc)
+      as = *as
+      as = as.map {|a| a.to_s}
 
       h = @stack.last || {}
-      @stack << h[as] = {}
+      @stack << h[@last_as = as] = {}
 
       blk.call
 
@@ -97,7 +99,7 @@ def file(name)
   puts RubyCss.to_css_simple RubyCss::Dsl.evaluate(buf).raw
 end
 
-def local
+def susy_local
   d = RubyCss::Dsl.new
 
   d.g_total_cols = 12
@@ -107,11 +109,24 @@ def local
   d.g_from_direction = 'left'
   d.g_omega_float = d.opposite_position(d.g_from_direction)
 
-  d._ ['.footer'] {
-    d.full
-    d.pad(3,3)
-  }
+  yield d
+  
+  puts RubyCss.to_css_simple d.raw
+  # puts d.raw
+end
 
+
+
+# file 'examples/sample.rb'
+
+
+
+# susy_local do |d|
+#   d._ ['.footer'] {
+#     d.full
+#     d.pad(3,3)
+#   }
+# end
   # footer {
   #   clear: both;
   #   margin-left: 1.639%;
@@ -119,10 +134,44 @@ def local
   #   padding-left: 24.59%;
   #   padding-right: 24.59%;
   # }
-  
-  puts RubyCss.to_css_simple d.raw
-  # puts d.raw
-end
 
-# file 'examples/sample.rb'
-local
+susy_local do |d|
+  d._ ['.susy_container'] {
+    d.container
+  }
+
+  d._ ['.susy_container:after'] {
+    d.pie_clearfix
+  }
+end
+  # .susy_container {
+  #   *zoom: 1;
+  #   margin: auto;
+  #   width: 61em;
+  #   max-width: 100%;
+  # }
+  # .susy_container:after {
+  #   content: "";
+  #   display: table;
+  #   clear: both;
+  # }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
