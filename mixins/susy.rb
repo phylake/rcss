@@ -25,7 +25,7 @@ module RubyCss
 
     # Return the width of 'n' columns plus 'n - 1' gutters
     # plus page padding in non-nested contexts
-    def columns_width(n=0)
+    def column_width(n=0)
       sg = 0
       if n.zero?
         n = g_total_cols
@@ -46,23 +46,23 @@ module RubyCss
     end
 
     # Return the percentage width of 'n' columns in a context of 'c'
-    def columns(n, c=0)
-      percent_width(columns_width(n), columns_width(c))
+    def column_percent(n, c=0)
+      percent_width(column_width(n), column_width(c))
     end
 
     # Return the percentage width of a single gutter in a context of 'c'
     def gutter(c=0)
-      percent_width(g_gutter_width, columns_width(c))
+      percent_width(g_gutter_width, column_width(c))
     end
 
     # Return the percentage width of a single side gutter in a context of 'c'
     def side_gutter(c=0)
-      percent_width(g_side_gutter_width, columns_width(c))
+      percent_width(g_side_gutter_width, column_width(c))
     end
 
     # Return the percentage width of a single column in a context of 'c'
     def column(c=0)
-      percent_width(g_col_width, columns_width(c))
+      percent_width(g_col_width, column_width(c))
     end
 
     # Base Mixin ----------------------------------------------------------------
@@ -74,7 +74,7 @@ module RubyCss
       
       mixin({
         margin: 'auto',
-        width: columns_width,
+        width: column_width,
         max_width: 100.percent
       })
     end
@@ -88,7 +88,7 @@ module RubyCss
     #  - Context MUST NOT be declared on a top-level element.
     # By default a grid_column is floated left with a right gutter.
     #  - Override those with +float("right"), +alpha or +omega
-    def columns_m(n, context=0, from=g_from_direction)
+    def columns(n, context=0, from=g_from_direction)
       to = opposite_position(from)
 
       # the column is floated left
@@ -96,7 +96,7 @@ module RubyCss
       
       mixin({
         # the width of the column is set as a percentage of the context
-        width: columns(n, context),
+        width: column_percent(n, context),
         # the right gutter is added as a percentage of the context
         "margin_#{to}" => gutter(context)
       })
@@ -134,7 +134,7 @@ module RubyCss
     # add empty colums as padding before an element.
     def prefix(n, context=0, from=g_from_direction)
       mixin({
-        "padding-#{from}" => columns(n, context) + gutter(context)
+        "padding-#{from}" => column_percent(n, context) + gutter(context)
       })
     end
 
@@ -142,7 +142,7 @@ module RubyCss
     def suffix(n, context=0, from=g_from_direction)
       to = opposite_position(from)
       mixin({
-        "padding-#{to}" => columns(n, context) + gutter(context)
+        "padding-#{to}" => column_percent(n, context) + gutter(context)
       })
     end
 

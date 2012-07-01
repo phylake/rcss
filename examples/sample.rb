@@ -42,12 +42,12 @@ _ ['input[type=search]'] {
 #
 
 _ ['.susy_container'] {
-  
+  container
+  # susy_grid_background
 }
 
 _ ['.susy_container:after'] {
-  container
-  # susy_grid_background
+  pie_clearfix
 }
 
 _ ['.list_layout'] {

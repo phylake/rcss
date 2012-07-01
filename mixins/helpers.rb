@@ -5,7 +5,7 @@ module RubyCss
     end
 
     def warn(msg)
-      puts "WARNING: #{msg}"
+      puts "/* WARNING: #{msg.gsub(/\*+\\+/,'')} */"
     end
 
     def opposite_position(p)
@@ -16,6 +16,10 @@ module RubyCss
       when 'right'; 'left'
       when 'center'; 'center'
       end
+    end
+
+    def unquote(value)
+      value.gsub(/^('|")+/,'').gsub(/('|")+$/,'')
     end
   end
 

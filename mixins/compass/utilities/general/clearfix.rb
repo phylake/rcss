@@ -30,6 +30,7 @@ module Compass
   # 
   # Adapted from: [A new micro clearfix hack](http://nicolasgallagher.com/micro_clearfix_hack/)
   def pie_clearfix
+    # TODO before/after filters
     mixin({
       content: '""',
       display: 'table',

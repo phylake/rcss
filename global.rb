@@ -36,7 +36,13 @@ class Unit
   end
 
   def to_s(radix=10)
-    @num.to_s(radix)
+    if @num.is_a?(Float)
+      @num.to_s
+    elsif @num.is_a?(Fixnum)
+      @num.to_s(radix)
+    else
+      raise "@num is not a Float or Fixnum"
+    end
   end
 
   def +(value)

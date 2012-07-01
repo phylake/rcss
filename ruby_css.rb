@@ -39,7 +39,7 @@ module RubyCss
           return
         end
         
-        return @gs[(meth.to_s + '=').to_sym]
+        return @gs[:"#{meth}="]
       end
 
       k    = meth.to_s.gsub(/_/, '-')
@@ -50,8 +50,23 @@ module RubyCss
     end
 
     def mixin(value)
-      @stack.last.merge!(value)
-      value
+      # puts "mixing %p" % value
+      
+      clean = {}
+      value.each do |k,v|
+        k = k.to_s.gsub(/_/, '-')
+        if @stack.last.key?(k)
+          begin
+            raise
+          rescue Exception => e
+            # warn "overwriting #{k}\n\t#{e.backtrace.join("\n\t")}"
+          end
+        end
+        clean[k] = v
+      end
+
+      @stack.last.merge!(clean)
+      clean
     end
 
     def finalize
@@ -72,7 +87,7 @@ module RubyCss
       if k.is_a?(Array) && v.is_a?(Hash)
         k.each {|s| to_css_simple(v, parents.dup << s, str) }
       elsif k.is_a?(Symbol) || k.is_a?(String)
-        subs << "\n   #{k.to_s.gsub(/_/, '-')}: #{v.to_s};"
+        subs << "\n   #{k.to_s}: #{v.to_s};" unless v.to_s == ''
       else
         raise "invalid key/value pair"
       end
@@ -135,15 +150,15 @@ end
   #   padding-right: 24.59%;
   # }
 
-susy_local do |d|
-  d._ ['.susy_container'] {
-    d.container
-  }
+# susy_local do |d|
+#   d._ ['.susy_container'] {
+#     d.container
+#   }
 
-  d._ ['.susy_container:after'] {
-    d.pie_clearfix
-  }
-end
+#   d._ ['.susy_container:after'] {
+#     d.pie_clearfix
+#   }
+# end
   # .susy_container {
   #   *zoom: 1;
   #   margin: auto;
@@ -156,6 +171,22 @@ end
   #   clear: both;
   # }
 
+susy_local do |d|
+  d._ ['.detail_view'] {
+    d.columns(9)
+    d.omega
+  }
+end
+  # .detail_view {
+  #   display: inline;
+  #   float: left;
+  #   width: 72.131%;
+  #   margin-right: 1.639%;
+  #   display: inline;
+  #   float: right;
+  #   margin-right: 1.639%;
+  #   #margin-left: -1em;
+  # }
 
 
 
