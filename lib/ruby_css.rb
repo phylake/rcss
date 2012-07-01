@@ -106,5 +106,5 @@ module RubyCss
 
   end
 
-  require './mixins/all'
+  require 'ruby_css/mixins/all'
 end# RubyCss

@@ -3,8 +3,8 @@ module RubyCss
     self.extend RubyCss::Helpers
 
     # Imports -------------------------------------------------------------------
-    require './mixins/compass/utilities/general/clearfix'
-    require './mixins/compass/utilities/general/float'
+    require 'ruby_css/mixins/compass/utilities/general/clearfix'
+    require 'ruby_css/mixins/compass/utilities/general/float'
     # require './mixins/compass/layout/grid_background'
 
     # Variables -----------------------------------------------------------------

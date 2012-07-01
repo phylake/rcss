@@ -1,7 +1,7 @@
-require './mixins/helpers'
+require 'ruby_css/mixins/helpers'
 
-require './mixins/color'
-require './mixins/vendor'
+require 'ruby_css/mixins/color'
+require 'ruby_css/mixins/vendor'
 
-require './mixins/compass/compass'
-require './mixins/susy'
+require 'ruby_css/mixins/compass/compass'
+require 'ruby_css/mixins/susy'
