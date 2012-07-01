@@ -172,8 +172,22 @@ end
   # }
 
 susy_local do |d|
-  d._ ['.detail_view'] {
-    d.columns(9)
+  d._ ['.container'] {
+    d.container
+  }
+
+  d._ ['.left-sidebar'] {
+    d.columns(3)
+    d.alpha
+  }
+
+  d._ ['.main'] {
+    d.columns(6)
+    d.foo_bar 0xf.color
+  }  
+
+  d._ ['.right-sidebar'] {
+    d.columns(3)
     d.omega
   }
 end
@@ -187,8 +201,6 @@ end
   #   margin-right: 1.639%;
   #   #margin-left: -1em;
   # }
-
-
 
 
 

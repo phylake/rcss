@@ -74,7 +74,7 @@ module RubyCss
       
       mixin({
         margin: 'auto',
-        width: column_width,
+        width: column_width.em,
         max_width: 100.percent
       })
     end
@@ -174,7 +174,7 @@ module RubyCss
     def omega(nested=false, from=g_from_direction)
       to   = opposite_position(from)
       hack = opposite_position(g_omega_float)
-      sg   = nested ? side_gutter : 0
+      sg   = nested ? 0 : side_gutter
       float(g_omega_float)
 
       m = {

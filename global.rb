@@ -110,7 +110,6 @@ class Percent < Unit
   end
 
   def to_s
-    # "%d%" % (num + (((num % 1) * 1000).to_i / 1000.0))
     "%.3f%" % num
   end
 end
@@ -122,9 +121,7 @@ class Fixnum
   include Conversions
 
   def to_color
-    color = to_s(16)
-    color.slice!(1..3) if color.slice(1..3) == color.slice(3..6)
-    "##{color}"
+    "#%06X" % self
   end
   alias_method :color, :to_color
 end
