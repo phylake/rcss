@@ -68,13 +68,9 @@ module RubyCss
 
     h.each do |k,v|
       if k.is_a?(Array) && v.is_a?(Hash)
-        k.each {|s| to_css_simple(v, Array.new(parents) << s, str) }
-      elsif (k.is_a?(Symbol) || k.is_a?(String))
-        if v.is_a?(String)
-          subs << "\n   #{k.to_s.gsub(/_/, '-')}: #{v};"
-        elsif v.is_a?(Hash)
-
-        end
+        k.each {|s| to_css_simple(v, parents.dup << s, str) }
+      elsif k.is_a?(Symbol) || k.is_a?(String)
+        subs << "\n   #{k.to_s.gsub(/_/, '-')}: #{v.to_s};"
       else
         raise "invalid key/value pair"
       end
@@ -104,7 +100,24 @@ end
 def local
   d = RubyCss::Dsl.new
 
-  # d._ ['foo'] {
+  d.g_total_cols = 12
+  d.g_col_width = 4.em
+  d.g_gutter_width = 1.em
+  d.g_side_gutter_width = d.g_gutter_width
+  d.g_from_direction = 'left'
+  d.g_omega_float = d.opposite_position(d.g_from_direction)
+
+  d._ ['.footer'] {
+    d.full
+    d.pad(3,3)
+  }
+
+  # footer {
+  #   clear: both;
+  #   margin-left: 1.639%;
+  #   margin-right: 1.639%;
+  #   padding-left: 24.59%;
+  #   padding-right: 24.59%;
   # }
   
   puts RubyCss.to_css_simple d.raw
@@ -112,9 +125,4 @@ def local
 end
 
 # file 'examples/sample.rb'
-# local
-
-puts 2.em
-puts 100.percent
-puts 2.em * 100.percent
-puts 100.percent * 2.em
+local
