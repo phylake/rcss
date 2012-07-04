@@ -2,8 +2,8 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "ruby_css"
-  s.version     = `git tag`.split("\n").first
+  s.name        = "ruby-css"
+  s.version     = `git tag`.split("\n").last
   s.authors     = ["Brandon Cook"]
   s.email       = ["phylake@gmail.com"]
   s.homepage    = "https://github.com/phylake/ruby-css"
