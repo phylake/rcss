@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "ruby_css/version"
 
 Gem::Specification.new do |s|
   s.name        = "ruby_css"
-  s.version     = RubyCss::VERSION
+  s.version     = `git tag`.split("\n").first
   s.authors     = ["Brandon Cook"]
   s.email       = ["phylake@gmail.com"]
   s.homepage    = "https://github.com/phylake/ruby-css"
