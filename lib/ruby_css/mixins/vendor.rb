@@ -1,9 +1,12 @@
 module RubyCss
   module Vendor
+    # this order is important for iteration
+    # standard properties should always be last
+    # see https://github.com/stubbornella/csslint/wiki/Require-standard-property-with-vendor-prefix
     VENDORS = {
-      0x1 => '',
       0x2 => '-webkit-',
-      0x4 => '-moz-'
+      0x4 => '-moz-',
+      0x1 => ''
     }
 
     NONE   = 0x1
@@ -49,11 +52,12 @@ module RubyCss
       mixin m
     end
 
-    def drop_shadow(h, v, blur, color='#000', inset=false)
+    def drop_shadow(h, v, blur, color=0, inset=false)
+      color = color.color
       m = {}
 
       VENDORS.each_value do |vendor|
-        m["#{vendor}box-shadow"] = "#{h}px #{v}px #{blur}px #{color}"
+        m["#{vendor}box-shadow"] = "#{h.px} #{v.px} #{blur.px} #{color}"
       end
 
       mixin m

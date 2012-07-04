@@ -21,7 +21,7 @@ self.g_global_fixed_height = (g_gutter_width * 3)
 # Tags
 #
 
-# global_reset
+global_reset
 
 _ ['body'] {
   font_family '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans_serif'
@@ -66,7 +66,7 @@ _ ['.list_layout'] {
     r = 8
     border 'solid', 1, '#eee', r, r, r, r
 
-    drop_shadow 1, 1, 1, '#fafafa', true
+    drop_shadow 1.px, 1.px, 1.px, 0xfafafa, true
   }
 }
 
@@ -79,7 +79,7 @@ _ ['.detail_view'] {
 # Ids
 #
 
-_ ['#global_nav'] {
+_ ['.global_nav'] {
   # font_size: 1.5em
   # line_height: 3em
 
@@ -94,7 +94,7 @@ _ ['#global_nav'] {
   drop_shadow 0, 5, 5
 }
 
-_ ['#global_page'] {
+_ ['.global_page'] {
   width '100%'
   padding_top(g_global_fixed_height + 0.5)
   margin_top g_gutter_width

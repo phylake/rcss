@@ -15,7 +15,7 @@ module Compass
   # [double_margin bug in IE5/6](http://www.positioniseverything.net/explorer/doubled_margin.html)
   def float(side='left')
     mixin({
-      display: 'inline',
+      # display: 'inline',
       float: unquote(side)
     })
   end

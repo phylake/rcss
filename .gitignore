@@ -1,8 +1,9 @@
+# provided by `bundle gem`
 *.gem
 .bundle
 Gemfile.lock
 pkg/*
 
-; test files
+# test files
 *.css
 test.*

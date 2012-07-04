@@ -84,19 +84,19 @@ end
 
 class Em < Unit
   def to_s
-    "#{num}em"
+    num.zero? ? '0' : "#{num}em"
   end
 end
 
 class Px < Unit
   def to_s
-    "#{num}px"
+    num.zero? ? '0' : "#{num}px"
   end
 end
 
 class Pt < Unit
   def to_s
-    "#{num}pt"
+    num.zero? ? '0' : "#{num}pt"
   end
 end
 
