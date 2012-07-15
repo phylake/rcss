@@ -137,6 +137,8 @@ class String
 end
 
 class Object
+  undef :display
+  
   def deep_clone
     Marshal.load(Marshal.dump(self))
   end

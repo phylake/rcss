@@ -113,7 +113,6 @@ module Compass
     }
 
     reset_html5
-    nil
   end
 
   # Reset all elements within some selector scope. To reset the selector itself,
@@ -220,8 +219,6 @@ module Compass
         reset_image_anchor_border
       }
     }
-
-    nil
   end
 
   # Reset the box model measurements.
@@ -308,9 +305,24 @@ module Compass
   # so they are rendered correctly in browsers that don't recognize them
   # and reset in browsers that have default styles for them.
   def reset_html5
-    #{elements_of_type(html5_block)} {
-      # display: block; }
-    {}
+    html5_blocks = %w(
+      article
+      aside
+      details
+      figcaption
+      figure
+      footer
+      header
+      hgroup
+      menu
+      nav
+      section
+      summary
+    )
+    
+    _(html5_blocks) {
+      display 'block'
+    }
   end
 
   # Resets the display of inline and block elements to their default display

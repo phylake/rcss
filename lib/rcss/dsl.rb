@@ -13,15 +13,15 @@ module Rcss
       @gs    = {}# globals
     end
 
-    def _(as, &blk)
-      raise "need a block" unless blk.is_a?(Proc)
+    def _(as)
+      raise "need a block" unless block_given?
       as = *as
       as = as.map {|a| a.to_s}
 
       h = @stack.last || {}
       @stack << h[@last_as = as] = {}
 
-      blk.call
+      yield self
 
       @stack.pop
 
