@@ -1,6 +1,6 @@
 module RubyCss
   module Susy
-    self.extend RubyCss::Helpers
+    extend RubyCss::Helpers
 
     # Imports -------------------------------------------------------------------
     require 'ruby_css/mixins/compass/utilities/general/clearfix'

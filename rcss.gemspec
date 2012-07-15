@@ -2,11 +2,11 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
-  s.name        = "ruby-css"
+  s.name        = "rcss"
   s.version     = `git tag`.split("\n").last
   s.authors     = ["Brandon Cook"]
   s.email       = ["phylake@gmail.com"]
-  s.homepage    = "https://github.com/phylake/ruby-css"
+  s.homepage    = "https://github.com/phylake/rcss"
   s.summary     = %q{Write a gem summary}
   s.description = %q{Write a gem description}
 
