@@ -180,7 +180,7 @@ module Rcss
       m = {
         "margin-#{to}" => sg
       }
-      m["margin-#{hack}"] = g_gutter_width if legacy_support_for_ie6 or legacy_support_for_ie7
+      m["margin-#{hack}"] = g_gutter_width*-1 if g_legacy_support_for_ie6 or g_legacy_support_for_ie7
       mixin m
     end
 

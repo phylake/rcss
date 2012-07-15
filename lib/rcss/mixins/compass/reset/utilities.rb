@@ -215,8 +215,10 @@ module Compass
     _ ['q', 'blockquote'] {
       reset_quotation
     }
-    _ ['a', 'img'] {
-      reset_image_anchor_border
+    _ ['a'] {
+      _ ['img'] {
+        reset_image_anchor_border
+      }
     }
 
     nil
