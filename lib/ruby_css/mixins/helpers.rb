@@ -1,4 +1,4 @@
-module RubyCss
+module Rcss
   module Helpers
     def max(a,b)
       a > b ? a : b

@@ -1,4 +1,4 @@
-module RubyCss
+module Rcss
   module Vendor
     # this order is important for iteration
     # standard properties should always be last
@@ -65,4 +65,4 @@ module RubyCss
   end# Vendor
 
   Dsl.send(:include, Vendor)
-end# RubyCss
+end# Rcss

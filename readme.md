@@ -1,8 +1,8 @@
-# RubyCSS
+# RCSS
 
-## RubyCSS in 5 seconds
+## RCSS in 5 seconds
 
-    # RubyCSS
+    # RCSS
 
     white = '#fff'
     _ ['a', 'span'] {
@@ -48,7 +48,7 @@ An [internal dsl] [fowler] for css built on ruby
 
 Variables are regular ruby variables meaning you can do things like
 
-    # RubyCSS
+    # RCSS
 
     white = 0xffffff.color
     red = '#ff0000'
@@ -81,7 +81,7 @@ Variables are regular ruby variables meaning you can do things like
 
 Nesting always begins with a `_`
 
-    # RubyCSS
+    # RCSS
     _ ['span'] {
         color '#f8f8f8'
         _ ['.nested-class] {
@@ -100,10 +100,10 @@ Nesting always begins with a `_`
 
 ### Mixins
 
-A mixin is a Ruby module nested under `RubyCss` containing any number of methods
+A mixin is a Ruby module nested under `Rcss` containing any number of methods
 
     # A complete mixin that does nothing
-    module RubyCss
+    module Rcss
         module YourCollectionOfMixins
             def your_mixin
                 h = {}
@@ -123,8 +123,8 @@ Each method must call `mixin` passing in a `Hash`
 Here are 2 trivial mixins
 
     # your_mixins.rb
-    require 'ruby_css'
-    module RubyCss
+    require 'rcss'
+    module Rcss
         module SimpleMixinExample
             def drop_shadow(h, v, blur, color)
                 m = {}
@@ -180,7 +180,7 @@ If you are doing calculations you should specify the above as `0xffffff`, and `0
 
 If you want something a little less terse than `_` you can make a different method using aliasing
 
-    module RubyCss
+    module Rcss
       class Dsl
         alias_method :something_less_terse, :_
       end
@@ -261,8 +261,8 @@ and is also the required syntax for using arrays as keys
 
 #### Mixins
 
-    require 'ruby_css'
-    module RubyCss
+    require 'rcss'
+    module Rcss
         module SassMixinsExample
 
             def table_mixin
@@ -299,7 +299,7 @@ I built this for myself out of frustration with the alternatives. That said, I'v
 
 Because this tool has a specific focus, least of which is squeezing every byte out of the output. Also because I gzip my CSS and deploy it to a CDN which works just fine for my needs.
 
-### Reasons **not** to use RubyCSS
+### Reasons **not** to use RCSS
 
 - Core Ruby classes such as String and Fixnum are altered. If you need something that runs in Rails during the rest of the application this might not be the best option. While unlikely that the alterations will clash with Rails or other frameworks, I'm not ensuring compatibility with anything else.
 

@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Write a gem summary}
   s.description = %q{Write a gem description}
 
-  # s.rubyforge_project = "ruby_css"
+  # s.rubyforge_project = "rcss"
 
   s.files         = `git ls-files`.split("\n")
   # s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -1,4 +1,4 @@
-module RubyCss
+module Rcss
   module Color
     def adjust(color, value)
       return -1 unless color.is_a?(Fixnum)
@@ -27,4 +27,4 @@ module RubyCss
   end# Color
 
   Dsl.send(:include, Color)
-end# RubyCss
+end# Rcss

@@ -1,10 +1,10 @@
-module RubyCss
+module Rcss
   module Susy
-    extend RubyCss::Helpers
+    extend Rcss::Helpers
 
     # Imports -------------------------------------------------------------------
-    require 'ruby_css/mixins/compass/utilities/general/clearfix'
-    require 'ruby_css/mixins/compass/utilities/general/float'
+    require 'rcss/mixins/compass/utilities/general/clearfix'
+    require 'rcss/mixins/compass/utilities/general/float'
     # require './mixins/compass/layout/grid_background'
 
     # Variables -----------------------------------------------------------------

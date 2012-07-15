@@ -1,4 +1,4 @@
-module RubyCss
+module Rcss
   class Dsl
     def self.evaluate(string, instance=nil)
       instance ||= Dsl.new
@@ -103,5 +103,5 @@ module RubyCss
 
   end
 
-  require 'ruby_css/mixins/all'
-end# RubyCss
+  require 'rcss/mixins/all'
+end# Rcss

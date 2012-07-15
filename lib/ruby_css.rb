@@ -1,2 +1,2 @@
-require 'ruby_css/global'
-require 'ruby_css/dsl'
+require 'rcss/global'
+require 'rcss/dsl'
