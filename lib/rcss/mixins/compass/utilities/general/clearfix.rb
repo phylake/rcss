@@ -37,4 +37,7 @@ module Compass
       clear:   'both'
     })
   end
+
+  # The other main method is to place an empty div after the float to be cleared
+  # <div style="clear: both;">
 end
